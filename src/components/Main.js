@@ -1,22 +1,42 @@
+import { useState, useEffect } from 'react';
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import { api } from "../utils/api"; 
 
 function Main(props) {
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar , setUserAvatar ] = useState('');
+
+  useEffect(() => {
+    api.getInitialUserInfo()
+    .then((result) => {
+        setUserName(result.name);
+        setUserDescription(result.about);
+        setUserAvatar(result.avatar);
+    })
+
+  });
 
   return(
     <main className="main">
         <section className="profile">
-            <div className="profile__avatar" onClick={props.onEditAvatarClick}>
+            <div 
+                className="profile__avatar" 
+                onClick={props.onEditAvatarClick}
+                style={{ backgroundImage: `url(${userAvatar})` }}
+            >
                 <div className="profile__avatar-cover"></div>
+                
             </div>
             <div className="profile__title">
-                <span className="profile__name"></span>
+                <span className="profile__name">{userName}</span>
                 <button className="button profile__edit-button" aria-label="edit button"
                     onClick={props.onEditProfileClick}>
                 <div className="profile__edit-image"></div>
                 </button>
             </div>
-            <p className="profile__job"></p>
+            <p className="profile__job">{userDescription}</p>
             <button className="button profile__add-button" aria-label="add button" 
                 onClick={props.onAddPlaceClick}>
                 <div className="profile__add-image"></div>
