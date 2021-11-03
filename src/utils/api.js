@@ -13,13 +13,13 @@ class Api {
       return res.json();
   }
   
-    getInitialUserInfo() {
+    getUserInfo() {
       return fetch(`${this._baseUrl}/users/me`,{
         headers: this._headers
       }).then(res => this._getResponseData(res));
     }
   
-    getInitialCards() {
+    getCards() {
       return fetch(`${this._baseUrl}/cards`,{
         headers: this._headers
       }).then(res => this._getResponseData(res));
