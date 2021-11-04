@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import PopupWithForm from "./PopupWithForm";
-import ImagePopup from "./ImagePopup";
 import { api } from "../utils/api";
 import Card from './Card'; 
 
@@ -16,13 +14,15 @@ function Main(props) {
         setUserName(result.name);
         setUserDescription(result.about);
         setUserAvatar(result.avatar);
-    });
+    })
+    .catch((err) => console.log(err));
     
     api.getCards()    
     .then((result) => {
         setCards(result);
     })
-  },[userName, userDescription, userAvatar]);
+    .catch((err) => console.log(err))
+  },[]);
 
   return(
     <main className="main">
@@ -61,61 +61,7 @@ function Main(props) {
             }
           </ul>
         </section>
-        <PopupWithForm 
-          name='update-avatar' 
-          title='Change profile picture' 
-          isOpen={props.isEditAvatarPopupOpen}
-          onClose={props.onClose}
-          children={
-            <>
-              <input type="url" className="popup__input" name="avatar" defaultValue="" placeholder="Avatar link" required />
-              <span className="popup__error"></span>
-            </>
-          }         
-        />
-        <PopupWithForm 
-          name='edit' 
-          title='Edit profile' 
-          isOpen={props.isEditProfilePopupOpen}
-          onClose={props.onClose}
-          children={
-            <>
-              <input type="text" className="popup__input"
-                name="name" defaultValue="" minLength="2" maxLength="40" required />
-              <span className="popup__error"></span>
-              <input type="text" className="popup__input"
-                name="job" defaultValue="" minLength="2" maxLength="200" required />
-              <span className="popup__error"></span>
-            </>
-          }        
-        />
-        <PopupWithForm 
-          name='add' 
-          title='New place' 
-          isOpen={props.isAddPlacePopupOpen}
-          onClose={props.onClose}
-          children={
-            <>
-              <input type="text" className="popup__input" name="name" defaultValue=""
-                placeholder="Title" minLength="1" maxLength="30" required />
-              <span className="popup__error"></span>
-              <input type="url" className="popup__input" name="link" defaultValue="" placeholder="Image link" required />
-              <span className="popup__error"></span>
-            </>
-          }
-        />
-        <PopupWithForm 
-            name='delete' 
-            title='Are you sure?' 
-            isOpen={false}
-            onClose={props.onClose}
-        />
-        <ImagePopup 
-          src={props.selectedCard}
-          isOpen={props.selectedCard ? true : false}
-          onClose={props.onClose}
-        />
-    </main>     
+    </main> 
   );
 
  

@@ -12,7 +12,7 @@ function PopupWithForm(props) {
             {props.children}
             <button type="submit" name="submit"
                 className="button popup__button popup__button_disabled" disabled>
-                Save
+                {props.buttonText}
             </button>
             </form>
         </div>

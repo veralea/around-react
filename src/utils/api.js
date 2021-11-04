@@ -1,5 +1,3 @@
-import { settings, access, profile, cardTemplate } from "./constants.js";
-
 class Api {
     constructor (options){
       this._baseUrl = options.baseUrl;

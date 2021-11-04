@@ -9,8 +9,8 @@ function ImagePopup(props) {
               aria-label="close button"
               onClick={props.onClose}
             ></button>
-            <img className="popup__image" src={props.src} alt="no image" />
-            <p className="popup__caption"></p>
+            <img className="popup__image" src={props.card ? props.card.link : "#"} alt={props.card ? props.card.name : "nothing"} />
+            <p className="popup__caption">{props.card ? props.card.name : ""}</p>
         </div>
       </section>         
     );
