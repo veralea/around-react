@@ -7,7 +7,7 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
- 
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -23,6 +23,7 @@ function App() {
       cohort: 'group-12'
     }
   );
+
 
   useEffect(() => {
     api.getUserInfo()    
@@ -55,6 +56,14 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handleUpdateUser({name, about}) {
+    api.setUserInfo({name, about})
+    .then((result) => {
+      setCurrentUser(result);
+      closeAllPopups();
+    });
+  }
+
   return (
     <div className="page">
       <div className="page__content">
@@ -76,20 +85,11 @@ function App() {
             <input type="url" className="popup__input" name="avatar" defaultValue="" placeholder="Avatar link" required />
             <span className="popup__error"></span>    
           </PopupWithForm>
-          <PopupWithForm 
-            name='edit' 
-            title='Edit profile' 
-            isOpen={isEditProfilePopupOpen}
+          <EditProfilePopup 
+            isOpen={isEditProfilePopupOpen} 
             onClose={closeAllPopups}
-            buttonText='Save'
-          >
-            <input type="text" className="popup__input"
-              name="name" defaultValue="" minLength="2" maxLength="40" required />
-            <span className="popup__error"></span>
-            <input type="text" className="popup__input"
-              name="job" defaultValue="" minLength="2" maxLength="200" required />
-            <span className="popup__error"></span>
-          </PopupWithForm>
+            onUpdateUser={handleUpdateUser}
+          /> 
           <PopupWithForm 
             name='add' 
             title='New place' 
