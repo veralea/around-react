@@ -29,7 +29,7 @@ function EditProfilePopup(props) {
     setName(currentUser.name);
     setDescription(currentUser.about);
     
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   return (
     <PopupWithForm 

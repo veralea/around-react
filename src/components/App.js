@@ -71,7 +71,8 @@ function App() {
     .then((result) => {
       setCurrentUser(result);
       closeAllPopups();
-    });
+    })
+    .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(avatar) {
@@ -79,21 +80,24 @@ function App() {
     .then((result) => {
       setCurrentUser(result);
       closeAllPopups();    
-    });
+    })
+    .catch((err) => console.log(err));
   }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikes(card._id, !isLiked ? "PUT" : "DELETE").then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+    })
+    .catch((err) => console.log(err));
   }
 
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
       const newCards = cards.filter((c) => c._id !== card._id);
       setCards(newCards);
-    });   
+    })
+    .catch((err) => console.log(err));   
   }
 
   function handleAddPlaceSubmit(cardData) {
@@ -102,7 +106,8 @@ function App() {
     .then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups();
-    });
+    })
+    .catch((err) => console.log(err));
   }
 
   return (
